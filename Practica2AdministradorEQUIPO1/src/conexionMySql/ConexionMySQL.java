@@ -44,7 +44,7 @@ public class ConexionMySQL {
 	public Connection obtenerConexion(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			this.conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/gestionusuarios","root","JIMENEZ");
+			this.conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/gestionusuarios","root","RdrBcngr05");
 			if(conexion==null){
 				System.out.println("Conexion no establecida");
 			}else{
@@ -77,5 +77,14 @@ public class ConexionMySQL {
 			
 		}
 		return conexion;
+	}
+	
+	public void cerrarConexion(){
+		try{
+			this.conexion.close();
+		}catch(SQLException SQLE){
+			SQLE.getMessage();
+		}
+		
 	}
 }
