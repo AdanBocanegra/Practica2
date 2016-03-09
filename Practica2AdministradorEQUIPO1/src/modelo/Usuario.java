@@ -32,6 +32,10 @@ public class Usuario {
 		this.correo = correo;
 	}
 
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	public String getContrasenia() {
 		return contrasenia;
 	}
