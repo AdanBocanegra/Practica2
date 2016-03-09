@@ -53,7 +53,8 @@ public class ControladorLogin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println(request.getParameter("id"));
+		
 		
 	}
 
@@ -63,20 +64,22 @@ public class ControladorLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		
+		System.out.println(request.getAttribute("id"));
 		String ruta = request.getServletContext().getRealPath("/");
-//		instancia hacia la conexion de mysql
-		try{
-			ConexionMySQL conexion = new ConexionMySQL(ruta+"/archivos");
-			conexion.obtenerConexionRuta();
-		}catch(Exception e){
-			System.out.println("Error de conexion en login "+e.getMessage());
-		}
+
 //		Obtiene los parametros que el usuario ingreso para lograr iniciar sesion
 		String correo = request.getParameter("usuario");
 		String password = request.getParameter("contrasena");
 //		Los parametros obtenidos se enviar al metodo buscarUsuario en la clase gestionar archivo usuario
 		System.out.println("nombre: "+correo+" contrasena "+password);
+//		instancia hacia la conexion de mysql
+		try{
+			ConexionMySQL conexion = new ConexionMySQL(ruta+"/archivos");
+			conexion.obtenerConexionRuta();
+			archivoregistro = new GestionarLogin(conexion);
+		}catch(Exception e){
+			System.out.println("Error de conexion en login "+e.getMessage());
+		}
 		usuarioEncontrado = archivoregistro.buscarUsuario(correo,password);
 		
 		
@@ -97,8 +100,8 @@ public class ControladorLogin extends HttpServlet {
 		    salida.flush();
 		    salida.close();
 //		Usuario administrador   
-		}else if(usuarioEncontrado.getIdTipoUsuario()=='2'){
-			
+		}else if(usuarioEncontrado.getIdTipoUsuario()==2){
+			response.sendRedirect("registroExitoso.html");
 		}
 		System.gc();
 	}
